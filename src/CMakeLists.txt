@@ -1,7 +1,8 @@
 
-add_subdirectory(data)
 
-add_executable(nuk main.cpp ${DATA_SRC})
-target_link_libraries(nuk ${LIBS})
+add_subdirectory(data)
+add_subdirectory(util)
+add_subdirectory(viz)
+
 
 

@@ -30,11 +30,11 @@ Planet::Planet(const Json::Value& planetData)
 
 void Planet::print(FILE* out) const
 {
-	fprintf(out, "%s\n------------\n\n", mName.c_str());
+	fprintf(out, "%s (%d, %d)\n------------\n\n", mName.c_str(), mPos.x, mPos.y);
 	fprintf(out, "M: %d, F: %d, D: %d\n\n", mMines, mFactories, mDefense);
-	fprintf(out, "neut: %d/%d (%d %%)\n", mNeut.surface, mNeut.ground, mNeut.density);
-	fprintf(out, "dur: %d/%d (%d %%)\n", mDur.surface, mDur.ground, mDur.density);
-	fprintf(out, "tri: %d/%d (%d %%)\n", mTri.surface, mTri.ground, mTri.density);
-	fprintf(out, "moly: %d/%d (%d %%)\n\n", mMoly.surface, mMoly.ground, mMoly.density);
+	fprintf(out, "neut: %d/%d (%d%%)\n", mNeut.surface, mNeut.ground, mNeut.density);
+	fprintf(out, "dur: %d/%d (%d%%)\n", mDur.surface, mDur.ground, mDur.density);
+	fprintf(out, "tri: %d/%d (%d%%)\n", mTri.surface, mTri.ground, mTri.density);
+	fprintf(out, "moly: %d/%d (%d%%)\n\n", mMoly.surface, mMoly.ground, mMoly.density);
 	fprintf(out, "supplies: %d, MCs: %d\n\n", mSupplies, mMCs);
 }

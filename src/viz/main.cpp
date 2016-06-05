@@ -1,7 +1,10 @@
 
 #include "data/planet.h"
+#include "data/ship.h"
+#include "viz/window.h"
 
 #include <json/json.h>
+
 #include <fstream>
 #include <cstdio>
 
@@ -20,9 +23,17 @@ int main(int argc, char* argv[])
 	Json::Value root;
 	turnfile >> root;
 	vector<Planet> planets;
+	vector<Ship> ships;
 
 	for (auto p : root["planets"])
 		planets.push_back(Planet(p));
+	for (auto s : root["ships"])
+		ships.push_back(Ship(s));
+
+	Gtk::Main kit(argc, argv);
+
+	VizWindow window(planets, ships);
+	Gtk::Main::run(window);
 
 	return 0;
 }

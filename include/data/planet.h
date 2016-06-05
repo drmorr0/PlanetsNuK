@@ -2,7 +2,7 @@
 #define _DATA_PLANET_H
 
 #include "data/mineral.h"
-#include "types.h"
+#include "util/point.h"
 
 #include <json/json.h>
 #include <string>
@@ -12,8 +12,8 @@ class Planet
 public:
 	Planet(const Json::Value& planetData);
 
-	std::string name();
-	Point pos();
+	std::string name() { return mName; }
+	Point pos() { return mPos; }
 
 	int mines() { return mMines; }
 	int factories() { return mFactories; }
