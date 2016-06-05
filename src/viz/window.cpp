@@ -10,7 +10,7 @@
 
 using namespace std;
 
-VizWindow::VizWindow(const vector<Planet>& planets, const vector<Ship>& ships, 
+VizWindow::VizWindow(const vector<Planet*>& planets, const vector<Ship*>& ships, 
 		const Gtk::WindowType& wt) :
 	Gtk::Window(wt),
 	fpCanvas(Gtk::manage(new VizCanvas(planets, ships)))
@@ -19,6 +19,12 @@ VizWindow::VizWindow(const vector<Planet>& planets, const vector<Ship>& ships,
 	vp->add(*fpCanvas);
 	vp->show_all();
 	add(*TheBuilder::get("viz_main_grid"));
+}
+
+void VizWindow::setSelectionText(const string& text)
+{
+	Gtk::TextView* infoBox = TheBuilder::get<Gtk::TextView>("viz_sel_info_box");
+    infoBox->get_buffer()->set_text(text);
 }
 
 

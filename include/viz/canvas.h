@@ -23,7 +23,7 @@ class Ship;
 class VizCanvas : public Gtk::DrawingArea
 {
 public:
-	VizCanvas(const std::vector<Planet>& planets, const std::vector<Ship>& ships);
+	VizCanvas(const std::vector<Planet*>& planets, const std::vector<Ship*>& ships);
 	void render(const CairoContext& ctx, double scale, const Vector2D& offset);
 
 	void setSelection(int id) { mSelection = id; }

@@ -23,6 +23,7 @@ public:
 
 	virtual bool contains(const Vector2D& pt) const = 0;
 	virtual void render(const CairoContext& ctx, const Vector2D& canvOffset, double zoom) const= 0;
+	virtual std::string getInfoText() const = 0;
 
 protected:
 	friend class Scene;

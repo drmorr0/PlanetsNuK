@@ -7,6 +7,7 @@ using namespace std;
 Planet::Planet(const Json::Value& planetData)
 {
 	mName = planetData["name"].asString();
+	mOwner = planetData["ownerid"].asInt();
 
 	mPos = Point{planetData["x"].asInt(), planetData["y"].asInt()};
 
@@ -28,13 +29,27 @@ Planet::Planet(const Json::Value& planetData)
 				    planetData["densitymolybdenum"].asInt()};
 }
 
+string Planet::sprint() const
+{
+	char out[1024];
+	sprintf(out, "%s (Owner: %d)\n------------\n\n"
+	             "x: %d, y: %d\n\n"
+				 "M: %d, F: %d, D: %d\n\n"
+				 "neut: %d/%d (%d%%)\n"
+				 "dur: %d/%d (%d%%)\n"
+				 "tri: %d/%d (%d%%)\n"
+				 "moly: %d/%d (%d%%)\n\n"
+				 "supplies: %d, MCs: %d\n\n",
+			mName.c_str(), mOwner, mPos.x, mPos.y, mMines, mFactories, mDefense,
+			mNeut.surface, mNeut.ground, mNeut.density,
+			mDur.surface, mDur.ground, mDur.density,
+			mTri.surface, mTri.ground, mTri.density,
+			mMoly.surface, mMoly.ground, mMoly.density,
+		mSupplies, mMCs);
+	return string(out);
+}
+
 void Planet::print(FILE* out) const
 {
-	fprintf(out, "%s (%d, %d)\n------------\n\n", mName.c_str(), mPos.x, mPos.y);
-	fprintf(out, "M: %d, F: %d, D: %d\n\n", mMines, mFactories, mDefense);
-	fprintf(out, "neut: %d/%d (%d%%)\n", mNeut.surface, mNeut.ground, mNeut.density);
-	fprintf(out, "dur: %d/%d (%d%%)\n", mDur.surface, mDur.ground, mDur.density);
-	fprintf(out, "tri: %d/%d (%d%%)\n", mTri.surface, mTri.ground, mTri.density);
-	fprintf(out, "moly: %d/%d (%d%%)\n\n", mMoly.surface, mMoly.ground, mMoly.density);
-	fprintf(out, "supplies: %d, MCs: %d\n\n", mSupplies, mMCs);
+	fprintf(out, "%s", sprint().c_str());
 }

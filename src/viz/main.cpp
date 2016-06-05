@@ -22,13 +22,13 @@ int main(int argc, char* argv[])
 	
 	Json::Value root;
 	turnfile >> root;
-	vector<Planet> planets;
-	vector<Ship> ships;
+	vector<Planet*> planets;
+	vector<Ship*> ships;
 
 	for (auto p : root["planets"])
-		planets.push_back(Planet(p));
+		planets.push_back(new Planet(p));
 	for (auto s : root["ships"])
-		ships.push_back(Ship(s));
+		ships.push_back(new Ship(s));
 
 	Gtk::Main kit(argc, argv);
 

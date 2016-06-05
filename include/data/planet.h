@@ -13,6 +13,7 @@ public:
 	Planet(const Json::Value& planetData);
 
 	std::string name() { return mName; }
+	int owner() { return mOwner; }
 	Point pos() { return mPos; }
 
 	int mines() { return mMines; }
@@ -29,6 +30,7 @@ public:
 
 private:
 	std::string mName;
+	int mOwner;
 	Point mPos;
 
 	// Structures
@@ -41,6 +43,7 @@ private:
 	// Natives
 	
 public:
+	std::string sprint() const;
 	void print(FILE* out = stdout) const;
 };
 

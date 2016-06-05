@@ -7,8 +7,6 @@
  * handlers, and the like, that are needed in order for the program to run
  */
 
-#include <memory>
-
 #include <gtkmm.h>
 
 class VizCanvas;
@@ -18,8 +16,10 @@ class Ship;
 class VizWindow : public Gtk::Window
 {
 public:
-	VizWindow(const std::vector<Planet>& planets, const std::vector<Ship>& ships,
+	VizWindow(const std::vector<Planet*>& planets, const std::vector<Ship*>& ships,
 			const Gtk::WindowType& wt = Gtk::WINDOW_TOPLEVEL);
+
+	void setSelectionText(const std::string& text);
 
 private:
 	VizCanvas* fpCanvas;

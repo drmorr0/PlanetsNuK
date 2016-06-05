@@ -7,23 +7,26 @@
  *
  */
 
-#include "scene_obj.h"
+#include "viz/scene_obj.h"
+
 #include <gdkmm-3.0/gdkmm.h>
 #include <string>
+
+class Planet;
 
 // A scene object for vertices of a graph
 class PlanetSceneObject : public SceneObject
 {
 public:
-	PlanetSceneObject(double x, double y, double radius = 10, double thickness = 1, 
-			const Gdk::Color& color = Gdk::Color("#000000"), 
-			const Gdk::Color& fillColor = Gdk::Color("#ffffff"));
-	PlanetSceneObject(const Vector2D& center, double radius = 10, double thickness = 1, 
-			const Gdk::Color& color = Gdk::Color("#000000"), 
-			const Gdk::Color& fillColor = Gdk::Color("#ffffff"));
+	PlanetSceneObject(double x, double y, Planet* planet, 
+			double radius = 10, double thickness = 1);
+	PlanetSceneObject(const Vector2D& center, Planet* planet, 
+			double radius = 10, double thickness = 1);
 
 	virtual bool contains(const Vector2D& pt) const;
 	virtual void render(const CairoContext& ctx, const Vector2D& canvOffset, double zoom) const;
+
+	virtual std::string getInfoText() const;
 
 	Vector2D getPos() const { return mCenter; }
 	void setFill(const Gdk::Color& c) { mFill = c; }
@@ -37,6 +40,8 @@ public:
 	double getAbsRadius() const { return mRadius + mThickness; }
 
 private:
+	Planet* fpPlanet;
+
 	Vector2D mCenter;
 	double mRadius;
 	double mThickness;

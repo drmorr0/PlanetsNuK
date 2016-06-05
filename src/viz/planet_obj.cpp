@@ -1,28 +1,28 @@
 // scene_obj.cpp: David R. Morrison, March 2014
 // Implementation details for SceneObjects
 
+#include "data/planet.h"
 #include "viz/planet_obj.h"
+#include "viz/color_palette.h"
 #include "util/vector2d.h"
-
 
 using namespace std;
 
-PlanetSceneObject::PlanetSceneObject(double x, double y, double radius, double thickness,
-		const Gdk::Color& color, const Gdk::Color& fillColor) :
-	PlanetSceneObject(Vector2D(x, y), radius, thickness, color, fillColor)
+PlanetSceneObject::PlanetSceneObject(double x, double y, Planet* planet, double radius, double thickness) : 
+	PlanetSceneObject(Vector2D(x, y), planet, radius, thickness)
 {
 	/* Do nothing */
 }
 
-PlanetSceneObject::PlanetSceneObject(const Vector2D& center, double radius, double thickness,
-		const Gdk::Color& color, const Gdk::Color& fillColor) :
+PlanetSceneObject::PlanetSceneObject(const Vector2D& center, Planet* planet,
+		double radius, double thickness) :
+	fpPlanet(planet),
 	mCenter(center),
 	mRadius(radius),
-	mThickness(thickness),
-	mColor(color),
-	mFill(fillColor)
+	mThickness(thickness)
 {
-	/* Do nothing */
+	mColor = Gdk::Color("#000000");
+	mFill = Palette[fpPlanet->owner()];
 }
 
 bool PlanetSceneObject::contains(const Vector2D& pt) const
@@ -47,6 +47,11 @@ void PlanetSceneObject::render(const CairoContext& ctx, const Vector2D& canvOffs
 	ctx->stroke();
 
 	ctx->restore();
+}
+
+string PlanetSceneObject::getInfoText() const
+{
+	return fpPlanet->sprint();
 }
 
 

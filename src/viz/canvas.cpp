@@ -2,6 +2,7 @@
 // Implementation details for the VizCanvas class
 
 #include "viz/canvas.h"
+#include "viz/window.h"
 #include "viz/scene.h"
 #include "viz/planet_obj.h"
 
@@ -15,7 +16,7 @@ using namespace std;
  *  1) Set up the events that the canvas will accept
  *  2) Initialize the scene graph
  */
-VizCanvas::VizCanvas(const vector<Planet>& planets, const vector<Ship>& ships) :
+VizCanvas::VizCanvas(const vector<Planet*>& planets, const vector<Ship*>& ships) :
 	pScene(new Scene),
 	mCanvOffset(Vector2D{-1500, 2500}),
 	mZoomStep(1.1),
@@ -26,9 +27,8 @@ VizCanvas::VizCanvas(const vector<Planet>& planets, const vector<Ship>& ships) :
 	// handlers, nor does it seem to work with the Gdk::ALL_EVENTS_MASK (TODO)
 	add_events(Gdk::BUTTON_PRESS_MASK | Gdk::SCROLL_MASK | Gdk::POINTER_MOTION_MASK);
 
-	// TODO draw the scene here
 	for (auto p : planets)
-		pScene->addObject(new PlanetSceneObject(p.pos().x, -p.pos().y, 10));
+		pScene->addObject(new PlanetSceneObject(p->pos().x, -p->pos().y, p));
 }
 
 void VizCanvas::render(const CairoContext& ctx, double scale, const Vector2D& offset)
@@ -62,6 +62,8 @@ bool VizCanvas::on_button_press_event(GdkEventButton* evt)
 	if (objs.size() > 0)
 	{
 		setSelection(objs[0]->id());
+		VizWindow* parent = static_cast<VizWindow*>(this->get_toplevel());
+		parent->setSelectionText(objs[0]->getInfoText());
 
 		// Only need to redraw if the selection actually changed...
 		queue_draw();
