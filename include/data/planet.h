@@ -13,6 +13,7 @@ public:
 	Planet(const Json::Value& planetData);
 
 	std::string name() { return mName; }
+	int id() { return mId; }
 	int owner() { return mOwner; }
 	Point pos() { return mPos; }
 
@@ -30,7 +31,7 @@ public:
 
 private:
 	std::string mName;
-	int mOwner;
+	int mId, mOwner;
 	Point mPos;
 
 	// Structures

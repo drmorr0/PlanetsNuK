@@ -7,6 +7,7 @@ using namespace std;
 Planet::Planet(const Json::Value& planetData)
 {
 	mName = planetData["name"].asString();
+	mId = planetData["id"].asInt() - 1; 	// IDs start at 1 in the turn data
 	mOwner = planetData["ownerid"].asInt();
 
 	mPos = Point{planetData["x"].asInt(), planetData["y"].asInt()};
@@ -32,7 +33,7 @@ Planet::Planet(const Json::Value& planetData)
 string Planet::sprint() const
 {
 	char out[1024];
-	sprintf(out, "%s (Owner: %d)\n------------\n\n"
+	sprintf(out, "#%d %s (Owner: %d)\n------------\n\n"
 	             "x: %d, y: %d\n\n"
 				 "M: %d, F: %d, D: %d\n\n"
 				 "neut: %d/%d (%d%%)\n"
@@ -40,7 +41,7 @@ string Planet::sprint() const
 				 "tri: %d/%d (%d%%)\n"
 				 "moly: %d/%d (%d%%)\n\n"
 				 "supplies: %d, MCs: %d\n\n",
-			mName.c_str(), mOwner, mPos.x, mPos.y, mMines, mFactories, mDefense,
+			(mId + 1), mName.c_str(), mOwner, mPos.x, mPos.y, mMines, mFactories, mDefense,
 			mNeut.surface, mNeut.ground, mNeut.density,
 			mDur.surface, mDur.ground, mDur.density,
 			mTri.surface, mTri.ground, mTri.density,

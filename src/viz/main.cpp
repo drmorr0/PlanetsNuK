@@ -1,6 +1,7 @@
 
 #include "data/planet.h"
 #include "data/ship.h"
+#include "algo/dbscan.h"
 #include "viz/window.h"
 
 #include <json/json.h>
@@ -29,6 +30,16 @@ int main(int argc, char* argv[])
 		planets.push_back(new Planet(p));
 	for (auto s : root["ships"])
 		ships.push_back(new Ship(s));
+
+	size_t minPts = 3;
+	vector<vector<Planet*>> clusters = dbscan(planets, 1, 81, minPts);
+	for (auto cluster : clusters)
+	{
+		printf("[ ");
+		for (auto p : cluster) 
+			printf("%d ", p->id() + 1);
+		printf("]\n");
+	}
 
 	Gtk::Main kit(argc, argv);
 
