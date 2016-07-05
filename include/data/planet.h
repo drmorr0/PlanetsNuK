@@ -1,38 +1,30 @@
 #ifndef _DATA_PLANET_H
 #define _DATA_PLANET_H
 
+#include "data/object.h"
 #include "data/mineral.h"
 #include "util/point.h"
 
 #include <json/json.h>
-#include <string>
 
-class Planet
+class Planet : public Object
 {
 public:
 	Planet(const Json::Value& planetData);
 
-	std::string name() { return mName; }
-	int id() { return mId; }
-	int owner() { return mOwner; }
-	Point pos() { return mPos; }
+	int mines() const { return mMines; }
+	int factories() const { return mFactories; }
+	int defense() const { return mDefense; }
 
-	int mines() { return mMines; }
-	int factories() { return mFactories; }
-	int defense() { return mDefense; }
+	Mineral neut() const { return mNeut; }
+	Mineral dur() const { return mDur; }
+	Mineral tri() const { return mTri; }
+	Mineral moly() const { return mMoly; }
 
-	Mineral neut() { return mNeut; }
-	Mineral dur() { return mDur; }
-	Mineral tri() { return mTri; }
-	Mineral moly() { return mMoly; }
-
-	int supplies() { return mSupplies; }
-	int MCs() { return mMCs; }
+	int supplies() const { return mSupplies; }
+	int MCs() const { return mMCs; }
 
 private:
-	std::string mName;
-	int mId, mOwner;
-	Point mPos;
 
 	// Structures
 	int mMines, mFactories, mDefense;

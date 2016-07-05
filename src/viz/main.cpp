@@ -1,4 +1,5 @@
 
+#include "data/sector.h"
 #include "data/planet.h"
 #include "data/ship.h"
 #include "algo/dbscan.h"
@@ -23,15 +24,14 @@ int main(int argc, char* argv[])
 	
 	Json::Value root;
 	turnfile >> root;
-	vector<Planet*> planets;
-	vector<Ship*> ships;
 
-	for (auto p : root["planets"])
-		planets.push_back(new Planet(p));
-	for (auto s : root["ships"])
-		ships.push_back(new Ship(s));
+	Sector sector(root);
+	sector.print();
 
-	size_t minPts = 3;
+	/*for (auto s : root["ships"])
+		ships.push_back(new Ship(s));*/
+
+/*	size_t minPts = 3;
 	vector<vector<Planet*>> clusters = dbscan(planets, 1, 81, minPts);
 	for (auto cluster : clusters)
 	{
@@ -44,7 +44,7 @@ int main(int argc, char* argv[])
 	Gtk::Main kit(argc, argv);
 
 	VizWindow window(planets, ships);
-	Gtk::Main::run(window);
+	Gtk::Main::run(window);*/
 
 	return 0;
 }

@@ -4,7 +4,7 @@
 
 using namespace std;
 
-Planet::Planet(const Json::Value& planetData)
+Planet::Planet(const Json::Value& planetData) : Object()
 {
 	mName = planetData["name"].asString();
 	mId = planetData["id"].asInt() - 1; 	// IDs start at 1 in the turn data

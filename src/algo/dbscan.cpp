@@ -5,16 +5,19 @@
 
 using namespace std;
 
-static vector<Planet*> findNeighbors(Planet* p, const vector<Planet*>& planets, int owner, int eps)
+namespace
 {
-	vector<Planet*> neighbors;
-	for (auto n : planets)
+	vector<Planet*> findNeighbors(Planet* p, const vector<Planet*>& planets, int owner, int eps)
 	{
-		if (n->owner() != owner) continue;
-		if (dist(p->pos(), n->pos()) < eps) neighbors.push_back(n);
+		vector<Planet*> neighbors;
+		for (auto n : planets)
+		{
+			if (n->owner() != owner) continue;
+			if (dist(p->pos(), n->pos()) < eps) neighbors.push_back(n);
+		}
+		return neighbors;
 	}
-	return neighbors;
-}
+};
 
 vector<vector<Planet*>> dbscan(const vector<Planet*>& planets, int owner, int eps, size_t minPts)
 {
